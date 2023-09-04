@@ -22,4 +22,4 @@ def search(request):
         # If there's an exact match, redirect to the entry page
         return redirect('entry', title=matching_entries[0])
     else:
-        return render(request, "encyclopedia/search.html", {"query":query, "entries":matching_entries})
+        return render(request, "encyclopedia/search.html", {"query": query, "entries": matching_entries})

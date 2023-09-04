@@ -1,15 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Search Results</title>
-</head>
-<body>
-    <h1>Search Results</h1>
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block body %}
     <p>Search results for: <strong>{{ query }}</strong></p>
     <ul>
         {% for entry in entries %}
             <li><a href="{% url 'entry' title=entry %}">{{ entry }}</a></li>
+        {% empty %}
+            <li>No matching entries found.</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+
+{% endblock %}
