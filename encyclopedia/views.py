@@ -1,6 +1,11 @@
 from django.shortcuts import render, redirect
+from django import forms
 
 from . import util
+
+class NewPageForm(forms.Form):
+    title = forms.CharField(label= 'Title')
+    content = forms.CharField(label= 'Content here',widget=forms.Textarea(attrs={"maxlength": None}))
 
 
 def index(request):
@@ -23,3 +28,7 @@ def search(request):
         return redirect('entry', title=matching_entries[0])
     else:
         return render(request, "encyclopedia/search.html", {"query": query, "entries": matching_entries})
+def add(request):
+    return render(request, "encyclopedia/add.html", {
+        "form":NewPageForm()
+    })
