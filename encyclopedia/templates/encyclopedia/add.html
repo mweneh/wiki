@@ -2,9 +2,9 @@
 {% block body %}
     <h1>Create New Page:</h1>
     <form action="{% url 'add' %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit">Save</button>
     </form>
     <a href="{% url 'index' %}">View Pages</a>
 {% endblock %}
