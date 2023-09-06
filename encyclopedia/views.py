@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django import forms
-
+import random
 from . import util
 
 class NewPageForm(forms.Form):
@@ -77,4 +77,7 @@ def edit(request,title):
         form = NewPageForm(initial={"title":title, "content":content})
     return render(request,"encyclopedia/edit.html",{'form':form, "title":title})
 
-
+def random(title):
+    entries = util.list_entries()
+    title = random.choice(entries)
+    return redirect("entry" , title=title)  
