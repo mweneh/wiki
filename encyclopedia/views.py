@@ -63,3 +63,18 @@ def add(request):
         form = NewPageForm()
 
     return render(request, "encyclopedia/add.html", {"form": form})
+def edit(request,title):
+    content = util.get_entry(title)
+    if content is None: 
+        return render(request, "error.html", {"message": "Entry not found."})
+    if request.method =="POST":
+        form = NewPageForm(request.POST)
+        if form.is_valid():
+            new_content = form.cleaned_data['content']
+            util.save_entry(title, new_content)
+            return redirect('entry',title=title)
+        else:
+            form = NewPageForm(initial={"title":title, "content":content})
+    return render(request,"encyclopedia/edit.html",{'form':form, "title":title})
+
+
