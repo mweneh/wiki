@@ -77,7 +77,8 @@ def edit(request,title):
         form = NewPageForm(initial={"title":title, "content":content})
     return render(request,"encyclopedia/edit.html",{'form':form, "title":title})
 
-def random(title):
+def random_page(request):
     entries = util.list_entries()
-    title = random.choice(entries)
-    return redirect("entry" , title=title)  
+    if entries:
+        title = random.choice(entries)
+        return redirect("entry" , title=title)  
