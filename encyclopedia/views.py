@@ -73,8 +73,8 @@ def edit(request,title):
             new_content = form.cleaned_data['content']
             util.save_entry(title, new_content)
             return redirect('entry',title=title)
-        else:
-            form = NewPageForm(initial={"title":title, "content":content})
+    else:
+        form = NewPageForm(initial={"title":title, "content":content})
     return render(request,"encyclopedia/edit.html",{'form':form, "title":title})
 
 
