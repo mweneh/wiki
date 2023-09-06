@@ -80,5 +80,5 @@ def edit(request,title):
 def random_page(request):
     entries = util.list_entries()
     if entries:
-        title = random.choice(entries)
-        return redirect("entry" , title=title)  
+        random_title = random.choice(entries)
+        return redirect("entry" , title=random_title)  
