@@ -28,7 +28,38 @@ def search(request):
         return redirect('entry', title=matching_entries[0])
     else:
         return render(request, "encyclopedia/search.html", {"query": query, "entries": matching_entries})
+# def add(request):
+#     entries = util.list_entries()
+#     if request.method == "POST":
+#         form = NewPageForm(request.POST)
+#         if form.is_valid():
+#             entry = form.data
+#             entries.append(entry)
+#             return redirect('entry', title=entries[-1])
+#         else:
+#             return render(request,"encyclopedia/add.html",{'form':form})
+        
+#     return render(request, "encyclopedia/add.html", {
+#         "form":NewPageForm()
+#     })
+
 def add(request):
-    return render(request, "encyclopedia/add.html", {
-        "form":NewPageForm()
-    })
+    if request.method == "POST":
+        form = NewPageForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+
+            # Check if an entry with the same title already exists
+            if util.get_entry(title):
+                raise ValueError(f"An encyclopedia entry already exists with the title {title}.")
+
+            # Save the new entry to disk using the util function
+            util.save_entry(title, content)
+
+            # Redirect to the new entry's page
+            return redirect("entry", title=title)
+    else:
+        form = NewPageForm()
+
+    return render(request, "encyclopedia/add.html", {"form": form})
