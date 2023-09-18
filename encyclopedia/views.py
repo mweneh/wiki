@@ -39,8 +39,8 @@ def add(request):
 
             # Check if an entry with the same title already exists
             if util.get_entry(title):
-                raise ValueError(f"An encyclopedia entry already exists with the title {title}.")
-
+                error_message = f"An encyclopedia entry already exists with the title '{title}'."
+                return render(request, "encyclopedia/error.html", {"message": error_message})
             # Save the new entry to disk using the util function
             util.save_entry(title, content)
 
