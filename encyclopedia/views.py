@@ -15,8 +15,9 @@ def index(request):
 
 def entry(request, title):
     content = util.get_entry( title)
+    htmlcontent =util.markdown_to_html(content)
     return render(request, "encyclopedia/entry.html", {
-        "title": title, "content": content
+        "title": title, "content": htmlcontent
     })
 def search(request):
     query = request.GET.get('q', '')  # Get the query from the request's GET parameters
@@ -28,20 +29,6 @@ def search(request):
         return redirect('entry', title=matching_entries[0])
     else:
         return render(request, "encyclopedia/search.html", {"query": query, "entries": matching_entries})
-# def add(request):
-#     entries = util.list_entries()
-#     if request.method == "POST":
-#         form = NewPageForm(request.POST)
-#         if form.is_valid():
-#             entry = form.data
-#             entries.append(entry)
-#             return redirect('entry', title=entries[-1])
-#         else:
-#             return render(request,"encyclopedia/add.html",{'form':form})
-        
-#     return render(request, "encyclopedia/add.html", {
-#         "form":NewPageForm()
-#     })
 
 def add(request):
     if request.method == "POST":
