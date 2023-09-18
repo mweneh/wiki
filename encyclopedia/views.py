@@ -15,6 +15,8 @@ def index(request):
 
 def entry(request, title):
     content = util.get_entry( title)
+    if content is None: 
+        return render(request, "encyclopedia/error.html", {"message": "Entry not found."})
     htmlcontent =util.markdown_to_html(content)
     return render(request, "encyclopedia/entry.html", {
         "title": title, "content": htmlcontent
